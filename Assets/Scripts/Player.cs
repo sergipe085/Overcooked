@@ -10,10 +10,7 @@ public class Player : MonoBehaviour
     private Vector3 moveDir = Vector2.zero;
 
     private void Update() {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-
-        Vector2 inputVector = new Vector2(horizontal, vertical).normalized;
+        Vector2 inputVector = GameInput.Instance.GetMovementVectorNormalized();
         moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
 
         float rotateSpeed = 10.0f;

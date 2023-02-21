@@ -10,6 +10,7 @@ public class PlayerAnimator : MonoBehaviour
     private int IsWalkingParameter = Animator.StringToHash("IsWalking");
 
     private void Update() {
-        animator.SetBool(IsWalkingParameter, player.IsWalking());
+        bool isWalking = player.IsWalking();
+        animator.SetBool(IsWalkingParameter, isWalking);
     }
 }
