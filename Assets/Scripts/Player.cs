@@ -3,8 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Singleton<Player>
 {
+    public event EventHandler<OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
+    public class OnSelectedCounterChangedEventArgs : EventArgs {
+        public ClearCounter selectedCounter;
+    }
+
     [SerializeField] private float moveSpeed = 5.0f;
     [SerializeField] private float rotateSpeed = 15.0f;
     [SerializeField] private LayerMask interactableLayer;
@@ -14,12 +19,8 @@ public class Player : MonoBehaviour
 
     private ClearCounter selectedCounter = null;
 
-    private void OnEnable() {
+    private void Start() {
         GameInput.Instance.OnInteractAction += GameInput_OnInteractAction;
-    }
-
-    private void OnDisable() {
-        GameInput.Instance.OnInteractAction -= GameInput_OnInteractAction;
     }
 
     private void Update() {
@@ -38,7 +39,7 @@ public class Player : MonoBehaviour
     }
 
     private void HandleInteractions() {
-        float interactionDistance = 2.8f;
+        float interactionDistance = 2f;
 
         selectedCounter = null;
         if (Physics.Raycast(transform.position, lookDir, out RaycastHit hit, interactionDistance, interactableLayer)) {
@@ -47,6 +48,10 @@ public class Player : MonoBehaviour
                 selectedCounter = counter;
             }
         }
+
+        OnSelectedCounterChanged?.Invoke(this, new OnSelectedCounterChangedEventArgs() {
+            selectedCounter = selectedCounter
+        });
     }
 
     private void HandleMovement() {
