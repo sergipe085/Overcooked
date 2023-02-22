@@ -7,7 +7,7 @@ public class Player : Singleton<Player>, IKitchenObjectParent
 {
     public event EventHandler<OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
     public class OnSelectedCounterChangedEventArgs : EventArgs {
-        public ClearCounter selectedCounter;
+        public BaseCounter selectedCounter;
     }
 
     [SerializeField] private float moveSpeed = 5.0f;
@@ -17,7 +17,7 @@ public class Player : Singleton<Player>, IKitchenObjectParent
     private Vector3 moveDir = Vector3.zero;
     private Vector3 lookDir = Vector3.zero;
 
-    private ClearCounter selectedCounter = null;
+    private BaseCounter selectedCounter = null;
 
     [SerializeField] private Transform kitchenObjectTransformPoint = null;
     private KitchenObject kitchenObject = null;
@@ -46,7 +46,7 @@ public class Player : Singleton<Player>, IKitchenObjectParent
 
         selectedCounter = null;
         if (Physics.Raycast(transform.position, lookDir, out RaycastHit hit, interactionDistance, interactableLayer)) {
-            ClearCounter counter = hit.transform.GetComponent<ClearCounter>();
+            BaseCounter counter = hit.transform.GetComponent<BaseCounter>();
             if (counter) {
                 selectedCounter = counter;
             }
