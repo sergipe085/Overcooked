@@ -5,13 +5,13 @@ using UnityEngine;
 public class ClearCounter : BaseCounter
 {
     public override void Interact(Player player) {
-        if (kitchenObject != null && !player.HasKitchenObject()) {
+        if (HasKitchenObject() && !player.HasKitchenObject()) {
             Debug.Log(kitchenObject.GetParent());
             kitchenObject.SetParent(player);
             return;
         }
 
-        if (player.HasKitchenObject() && kitchenObject == null) {
+        if (player.HasKitchenObject() && !HasKitchenObject()) {
             KitchenObject playerKitchenObject = player.GetKitchenObject();
             player.ClearKitchenObject();
             playerKitchenObject.SetParent(this);

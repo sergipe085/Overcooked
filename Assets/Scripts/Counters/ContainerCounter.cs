@@ -1,18 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ContainerCounter : BaseCounter
 {
+    public event Action OnPlayerGrabbedObject = null;
+
     [SerializeField] KitchenObjectSO kitchenObjectSO;
-    [SerializeField] private Animator animator = null;
 
     public override void Interact(Player player) {
         if (player.HasKitchenObject()) return;
 
-        KitchenObject kitchenObject = Instantiate(kitchenObjectSO.prefab, counterTopPoint);
+        KitchenObject kitchenObject = Instantiate(kitchenObjectSO.prefab);
         kitchenObject.SetParent(player);
 
-        animator.SetTrigger("OpenClose");
+        OnPlayerGrabbedObject?.Invoke();
     }
 }
