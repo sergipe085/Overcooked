@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,19 +6,56 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5.0f;
+    [SerializeField] private float rotateSpeed = 15.0f;
+    [SerializeField] private LayerMask interactableLayer;
 
-    private Vector3 moveDir = Vector2.zero;
+    private Vector3 moveDir = Vector3.zero;
+    private Vector3 lookDir = Vector3.zero;
 
-    private void Update() {
-        MoveTransform();
+    private ClearCounter selectedCounter = null;
 
-        float rotateSpeed = 10.0f;
-        transform.forward = Vector3.Slerp(transform.forward, moveDir, Time.deltaTime * rotateSpeed);
+    private void OnEnable() {
+        GameInput.Instance.OnInteractAction += GameInput_OnInteractAction;
     }
 
-    private void MoveTransform() {
+    private void OnDisable() {
+        GameInput.Instance.OnInteractAction -= GameInput_OnInteractAction;
+    }
+
+    private void Update() {
+        HandleMovement();
+        HandleInteractions();
+    }
+
+    public bool IsWalking() {
+        return moveDir.magnitude != 0.0f;
+    }
+
+    private void GameInput_OnInteractAction(object sender, EventArgs args) {
+        if (selectedCounter) {
+            selectedCounter.Interact();
+        }
+    }
+
+    private void HandleInteractions() {
+        float interactionDistance = 2.8f;
+
+        selectedCounter = null;
+        if (Physics.Raycast(transform.position, lookDir, out RaycastHit hit, interactionDistance, interactableLayer)) {
+            ClearCounter counter = hit.transform.GetComponent<ClearCounter>();
+            if (counter) {
+                selectedCounter = counter;
+            }
+        }
+    }
+
+    private void HandleMovement() {
         Vector2 inputVector = GameInput.Instance.GetMovementVectorNormalized();
         moveDir = new Vector3(inputVector.x, 0f, inputVector.y).normalized;
+
+        if (moveDir.magnitude != 0.0f) {
+            lookDir = moveDir;
+        }
         
         float playerHeight = 0.7f;
         float playerRadius = 0.5f;
@@ -44,9 +82,7 @@ public class Player : MonoBehaviour
         if (canMove) {
             transform.position += moveDir * moveDistance;
         }
-    }
 
-    public bool IsWalking() {
-        return moveDir.magnitude != 0.0f;
+        transform.forward = Vector3.Slerp(transform.forward, lookDir, Time.deltaTime * rotateSpeed);
     }
 }
