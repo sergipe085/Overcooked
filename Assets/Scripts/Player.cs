@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : Singleton<Player>
+public class Player : Singleton<Player>, IKitchenObjectParent
 {
     public event EventHandler<OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
     public class OnSelectedCounterChangedEventArgs : EventArgs {
@@ -18,6 +18,9 @@ public class Player : Singleton<Player>
     private Vector3 lookDir = Vector3.zero;
 
     private ClearCounter selectedCounter = null;
+
+    [SerializeField] private Transform kitchenObjectTransformPoint = null;
+    private KitchenObject kitchenObject = null;
 
     private void Start() {
         GameInput.Instance.OnInteractAction += GameInput_OnInteractAction;
@@ -34,7 +37,7 @@ public class Player : Singleton<Player>
 
     private void GameInput_OnInteractAction(object sender, EventArgs args) {
         if (selectedCounter) {
-            selectedCounter.Interact();
+            selectedCounter.Interact(this);
         }
     }
 
@@ -89,5 +92,25 @@ public class Player : Singleton<Player>
         }
 
         transform.forward = Vector3.Slerp(transform.forward, lookDir, Time.deltaTime * rotateSpeed);
+    }
+
+    public void SetKitchenObject(KitchenObject kitchenObject) {
+        this.kitchenObject = kitchenObject;
+    }
+
+    public KitchenObject GetKitchenObject() {
+        return kitchenObject;
+    }
+
+    public void ClearKitchenObject() {
+        kitchenObject = null;
+    }
+
+    public bool HasKitchenObject() {
+        return kitchenObject != null;
+    }
+
+    public Transform GetKitchenObjectPoint() {
+        return kitchenObjectTransformPoint;
     }
 }
