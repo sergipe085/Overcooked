@@ -24,6 +24,7 @@ public class Player : Singleton<Player>, IKitchenObjectParent
 
     private void Start() {
         GameInput.Instance.OnInteractAction += GameInput_OnInteractAction;
+        GameInput.Instance.OnInteractAlternateAction += GameInput_OnInteractAlternateAction;
     }
 
     private void Update() {
@@ -38,6 +39,12 @@ public class Player : Singleton<Player>, IKitchenObjectParent
     private void GameInput_OnInteractAction(object sender, EventArgs args) {
         if (selectedCounter) {
             selectedCounter.Interact(this);
+        }
+    }
+
+    private void GameInput_OnInteractAlternateAction(object sender, EventArgs args) {
+        if (selectedCounter) {
+            selectedCounter.InteractAlternate(this);
         }
     }
 

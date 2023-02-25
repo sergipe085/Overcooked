@@ -8,7 +8,7 @@ public class TrashCounter : BaseCounter
         KitchenObject kitchenObject = player.GetKitchenObject();
         if (kitchenObject) {
             player.ClearKitchenObject();
-            Destroy(kitchenObject.gameObject);
+            kitchenObject.DestroySelf();
         }
     }
 }
