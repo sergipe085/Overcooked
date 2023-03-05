@@ -13,7 +13,7 @@ public class CuttingCounterVisual : MonoBehaviour
         cuttingCounter.OnCutAction += CuttingCounter_OnCutAction;
     }
 
-    private void CuttingCounter_OnCutAction() {
+    private void CuttingCounter_OnCutAction(int _, int _2) {
         animator.SetTrigger(cutTriggerHash);
     }
 }
