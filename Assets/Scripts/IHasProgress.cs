@@ -6,4 +6,5 @@ using UnityEngine;
 public interface IHasProgress
 {
     public event Action<float, float> OnChangeProgressAction;
+    public event Action OnCloseProgressAction;
 }

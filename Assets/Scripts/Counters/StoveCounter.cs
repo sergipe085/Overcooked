@@ -12,6 +12,7 @@ public class StoveCounter : BaseCounter, IHasProgress
     public event Action OnStartStoveAction;
     public event Action OnEndStoveAction;
     public event Action<float, float> OnChangeProgressAction;
+    public event Action OnCloseProgressAction;
 
     private void Update() {
         if (currentRecipe) {
@@ -26,6 +27,7 @@ public class StoveCounter : BaseCounter, IHasProgress
                 currentRecipe = GetFryRecipeSOForInput(kitchenObjectSO);
 
                 if (!currentRecipe) {
+                    OnCloseProgressAction?.Invoke();
                     OnEndStoveAction?.Invoke();
                 }
             }
@@ -34,6 +36,7 @@ public class StoveCounter : BaseCounter, IHasProgress
 
     public override void Interact(Player player) {
         fryTimer = 0.0f;
+        OnCloseProgressAction?.Invoke();
 
         if (HasKitchenObject() && !player.HasKitchenObject()) {
             kitchenObject.SetParent(player);

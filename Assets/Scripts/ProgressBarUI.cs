@@ -18,6 +18,7 @@ public class ProgressBarUI : MonoBehaviour
         }
 
         hasProgress.OnChangeProgressAction += IHasProgress_OnChageProgressAction;
+        hasProgress.OnCloseProgressAction += Hide;
         Hide();
     }
 

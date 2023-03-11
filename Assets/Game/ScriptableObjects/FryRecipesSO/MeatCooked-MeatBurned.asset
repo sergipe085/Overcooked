@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06f7f74e153b35c4fb08e76321d96393, type: 3}
   m_Name: MeatCooked-MeatBurned
   m_EditorClassIdentifier: 
-  input: {fileID: 11400000, guid: 3dd7f77b37f4e4f4ea3b1ce68c75447a, type: 2}
-  output: {fileID: 11400000, guid: 9f914fa14c229ea40bf6b0e9f6a63068, type: 2}
+  input: {fileID: 11400000, guid: 9f914fa14c229ea40bf6b0e9f6a63068, type: 2}
+  output: {fileID: 11400000, guid: aa3388a8870dd7243b126f43e2b497c5, type: 2}
   fryTimerMax: 3

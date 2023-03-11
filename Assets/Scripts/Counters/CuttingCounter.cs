@@ -9,11 +9,15 @@ public class CuttingCounter : BaseCounter, IHasProgress
     [SerializeField] private CuttingRecipeSO[] cuttingRecipeSOs;
 
     public event Action<int, int> OnStartCutAction = null;
+
     public event Action<float, float> OnChangeProgressAction;
+    public event Action OnCloseProgressAction;
 
     private int cuttingProgess = 0;
 
     public override void Interact(Player player) {
+        OnCloseProgressAction?.Invoke();
+
         if (HasKitchenObject() && !player.HasKitchenObject()) {
             kitchenObject.SetParent(player);
             return;
