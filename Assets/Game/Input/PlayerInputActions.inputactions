@@ -113,17 +113,6 @@
                 },
                 {
                     "name": "",
-                    "id": "dbff710f-d37b-405e-9707-d60a2adce858",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Interact",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "226d8760-f6ce-4b93-b894-bb39e0fe08c7",
                     "path": "<Gamepad>/rightStickPress",
                     "interactions": "",
@@ -137,17 +126,6 @@
                     "name": "",
                     "id": "785a51f0-228d-4034-a564-a2cff5dbb5ed",
                     "path": "<Keyboard>/f",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "InteractAlternate",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "fff52a0a-d2eb-458c-927c-152090832764",
-                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

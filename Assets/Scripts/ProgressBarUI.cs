@@ -5,18 +5,25 @@ using UnityEngine.UI;
 
 public class ProgressBarUI : MonoBehaviour
 {
-    [SerializeField] private CuttingCounter cuttingCounter = null;
+    [SerializeField] private GameObject hasProgressGameObject = null;
     [SerializeField] private Image progressBarImage = null;
     [SerializeField] private Transform progressBarContainer = null;
+    private IHasProgress hasProgress = null;
 
     private void Start() {
-        cuttingCounter.OnCutAction += CuttingCounter_OnCutAction;
+        hasProgress = hasProgressGameObject.GetComponent<IHasProgress>();
+
+        if (hasProgress == null) {
+            Debug.LogError("Game Object " + hasProgressGameObject + "does not implement IHasProgress interface");
+        }
+
+        hasProgress.OnChangeProgressAction += IHasProgress_OnChageProgressAction;
         Hide();
     }
 
-    private void CuttingCounter_OnCutAction(int currentProgress, int maxProgress) {
+    private void IHasProgress_OnChageProgressAction(float currentProgress, float maxProgress) {
         Show();
-        progressBarImage.fillAmount = (float)currentProgress / maxProgress;
+        progressBarImage.fillAmount = currentProgress / maxProgress;
 
         if (currentProgress >= maxProgress) {
            Hide();

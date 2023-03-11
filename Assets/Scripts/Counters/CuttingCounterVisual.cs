@@ -10,10 +10,10 @@ public class CuttingCounterVisual : MonoBehaviour
     private int cutTriggerHash = Animator.StringToHash("Cut");
 
     private void Start() {
-        cuttingCounter.OnCutAction += CuttingCounter_OnCutAction;
+        cuttingCounter.OnChangeProgressAction += CuttingCounter_OnCutAction;
     }
 
-    private void CuttingCounter_OnCutAction(int _, int _2) {
+    private void CuttingCounter_OnCutAction(float _, float _2) {
         animator.SetTrigger(cutTriggerHash);
     }
 }

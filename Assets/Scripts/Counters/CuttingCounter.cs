@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CuttingCounter : BaseCounter
+public class CuttingCounter : BaseCounter, IHasProgress
 {
     [SerializeField] private KitchenObjectSO tomatoSlices = null;
     [SerializeField] private CuttingRecipeSO[] cuttingRecipeSOs;
-    public event Action<int, int> OnCutAction = null;
+
     public event Action<int, int> OnStartCutAction = null;
+    public event Action<float, float> OnChangeProgressAction;
+
     private int cuttingProgess = 0;
 
     public override void Interact(Player player) {
@@ -42,7 +44,7 @@ public class CuttingCounter : BaseCounter
 
             if (cuttingOutput) {
                 cuttingProgess++;
-                OnCutAction?.Invoke(cuttingProgess, cuttingRecipeSO.cuttingProgressMax);
+                OnChangeProgressAction?.Invoke(cuttingProgess, cuttingRecipeSO.cuttingProgressMax);
 
                 if (cuttingProgess >= cuttingRecipeSO.cuttingProgressMax) {
                     Debug.Log($"CuttinCounter.Cut({ GetKitchenObject() })");
