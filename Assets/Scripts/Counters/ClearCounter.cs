@@ -16,5 +16,11 @@ public class ClearCounter : BaseCounter
             playerKitchenObject.SetParent(this);
             return;
         }
+
+        if (player.HasKitchenObject() && HasKitchenObject()) {
+            KitchenObject currentKitchenObject = GetKitchenObject();
+            currentKitchenObject.InteractWithKitchenObject(player.GetKitchenObject(), player);
+            return;
+        }   
     }
 }

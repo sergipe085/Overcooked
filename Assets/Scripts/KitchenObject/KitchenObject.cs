@@ -25,6 +25,10 @@ public class KitchenObject : MonoBehaviour
         transform.localPosition = Vector3.zero;
     }
 
+    public virtual void InteractWithKitchenObject(KitchenObject kitchenObject, Player player) {
+
+    }
+
     public IKitchenObjectParent GetParent() {
         return parent;
     }
