@@ -18,9 +18,15 @@ public class ClearCounter : BaseCounter
         }
 
         if (player.HasKitchenObject() && HasKitchenObject()) {
-            KitchenObject currentKitchenObject = GetKitchenObject();
-            currentKitchenObject.InteractWithKitchenObject(player.GetKitchenObject(), player);
-            return;
+            KitchenObject kitchenObject = GetKitchenObject();
+            if (kitchenObject is PlateKitchenObject && !(player.GetKitchenObject() is PlateKitchenObject)) {
+                PlateKitchenObject plate = kitchenObject as PlateKitchenObject;
+                if (plate.TryAddIngredient(player.GetKitchenObject().GetKitchenObjectSO())) {
+                    Destroy(player.GetKitchenObject().gameObject);
+                    player.ClearKitchenObject();
+                }
+                return;
+            }
         }   
     }
 }

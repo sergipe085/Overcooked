@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class KitchenObject : MonoBehaviour
 {
@@ -23,10 +24,9 @@ public class KitchenObject : MonoBehaviour
 
         transform.parent = this.parent.GetKitchenObjectPoint();
         transform.localPosition = Vector3.zero;
-    }
 
-    public virtual void InteractWithKitchenObject(KitchenObject kitchenObject, Player player) {
-
+        transform.DORewind();
+        transform.DOPunchScale(new Vector3(0.2f, -0.4f, 0.2f), 0.2f);
     }
 
     public IKitchenObjectParent GetParent() {

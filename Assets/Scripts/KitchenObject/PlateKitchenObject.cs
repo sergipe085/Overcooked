@@ -1,19 +1,25 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlateKitchenObject : KitchenObject
 {
-    public List<KitchenObject> kitchenObjects = new List<KitchenObject>();
+    private List<KitchenObjectSO> kitchenObjects = new List<KitchenObjectSO>();
+    public List<KitchenObjectSO> validkitchenObjects = new List<KitchenObjectSO>();
+    public event Action<KitchenObjectSO> OnAddIngredient;
 
-    public override void InteractWithKitchenObject(KitchenObject kitchenObject, Player player) {
-        if (kitchenObject.GetType() == typeof(PlateKitchenObject)) {
-            return;
+    public bool TryAddIngredient(KitchenObjectSO kitchenObjectSO) {
+        if (!validkitchenObjects.Contains(kitchenObjectSO)) {
+            return false;
         }
 
-        kitchenObjects.Add(kitchenObject);
-        kitchenObject.transform.SetParent(transform);
-        kitchenObject.transform.localPosition = Vector3.up * 0.1f * (kitchenObjects.Count-1);
-        player.ClearKitchenObject();
-    }
+        if (kitchenObjects.Contains(kitchenObjectSO)) {
+            return false;
+        }
+
+        kitchenObjects.Add(kitchenObjectSO);
+        OnAddIngredient?.Invoke(kitchenObjectSO);
+        return true;
+    }   
 }
