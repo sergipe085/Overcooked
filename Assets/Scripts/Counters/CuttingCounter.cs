@@ -30,6 +30,14 @@ public class CuttingCounter : BaseCounter, IHasProgress
             cuttingProgess = 0;
             return;
         }
+
+        if (player.GetKitchenObject() is PlateKitchenObject && !(kitchenObject is PlateKitchenObject)) {
+            PlateKitchenObject plate = player.GetKitchenObject() as PlateKitchenObject;
+            if (plate.TryAddIngredient(kitchenObject.GetKitchenObjectSO())) {
+                Destroy(kitchenObject.gameObject);
+                ClearKitchenObject();
+            }
+        }
     }
 
     public override void InteractAlternate(Player player) {

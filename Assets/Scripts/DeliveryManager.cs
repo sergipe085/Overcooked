@@ -4,12 +4,23 @@ using UnityEngine;
 
 public class DeliveryManager : MonoBehaviour
 {
+    public static DeliveryManager Instance { get; private set; }
+
     [SerializeField] private RecipeListSO recipeListSO = null;
     private List<RecipeSO> waitingRecipeSOList = new List<RecipeSO>();
 
     private float spawnReciperTimer = 0.0f;
     private float spawnReciperTimerMax = 4.0f;
     private int waitingRecipesMax = 4;
+
+    private void Awake() {
+        if (Instance == null) {
+            Instance = this;
+        }
+        else {
+            Destroy(this.gameObject);
+        }
+    }
 
     private void Update() {
         spawnReciperTimer += Time.deltaTime;
