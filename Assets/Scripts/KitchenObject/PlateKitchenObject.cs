@@ -21,5 +21,9 @@ public class PlateKitchenObject : KitchenObject
         kitchenObjects.Add(kitchenObjectSO);
         OnAddIngredient?.Invoke(kitchenObjectSO);
         return true;
-    }   
+    }  
+
+    public KitchenObjectSO[] GetKitchenObjectSOs() {
+        return kitchenObjects.ToArray();
+    } 
 }
