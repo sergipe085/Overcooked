@@ -67,6 +67,8 @@ public class StoveCounter : BaseCounter, IHasProgress
             if (plate.TryAddIngredient(kitchenObject.GetKitchenObjectSO())) {
                 Destroy(kitchenObject.gameObject);
                 ClearKitchenObject();
+                currentRecipe = null;
+                OnEndStoveAction?.Invoke();
             }
         }
     }

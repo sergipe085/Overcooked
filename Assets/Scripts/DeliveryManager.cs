@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,8 @@ public class DeliveryManager : MonoBehaviour
     private float spawnReciperTimer = 0.0f;
     private float spawnReciperTimerMax = 4.0f;
     private int waitingRecipesMax = 4;
+
+    public event Action<List<RecipeSO>> OnChangeRecipesAction = null;
 
     private void Awake() {
         if (Instance == null) {
@@ -37,7 +40,9 @@ public class DeliveryManager : MonoBehaviour
 
     private void SpawnRecipe() {
         RecipeSO[] recipeSOs = recipeListSO.recipeSOList.ToArray();
-        waitingRecipeSOList.Add(recipeSOs[Random.Range(0, recipeSOs.Length)]);
+        waitingRecipeSOList.Add(recipeSOs[UnityEngine.Random.Range(0, recipeSOs.Length)]);
+
+        OnChangeRecipesAction?.Invoke(waitingRecipeSOList);
     }
 
     public void DeliveryRecipe(PlateKitchenObject plateKitchenObject) {
@@ -68,6 +73,7 @@ public class DeliveryManager : MonoBehaviour
             if (plateContentMatches) {
                 Debug.Log("Player delivery correct!");
                 waitingRecipeSOList.RemoveAt(i);
+                OnChangeRecipesAction?.Invoke(waitingRecipeSOList);
                 return;
             }
         }
